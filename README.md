@@ -8,7 +8,7 @@
 * 发送鼠标右键数据（双指左右滑动）
 
 ##v2.0
-* 使用曾剑锋（https://github.com/AplexOS）的WaterView添加触点水波纹效果。
+* 使用[曾剑锋](https://github.com/AplexOS)的WaterView添加触点水波纹效果 。
 * 重构WaterView的代码增加事件监听
   
   ````
