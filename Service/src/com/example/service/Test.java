@@ -4,10 +4,23 @@ import java.util.Arrays;
 
 public class Test {
 	public static void main(String[] args) {
-		int a = 89;
-		int b = -89;
-		System.out.println(Arrays.toString(intToBytes(b)));
-		System.out.println(bytesToInt(intToBytes(b), 0));
+		//String string1 = "1232313";
+		//replace(string1);
+		//System.out.println(string1);
+		String string1 = "111";
+		String string2 = "222";
+		
+		replace(string1, string2);
+		System.out.println(string1+"   "+string2);
+	}
+	public static void replace(String a,String b){
+		String temp = "";
+		
+		temp =a;
+		a = b;
+		b = temp;
+		//System.out.println(string.replace('1', '2'));;
+		//System.out.println(string);
 	}
 	public static byte[] intToBytes( int value )   
 	{   
