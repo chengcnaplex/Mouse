@@ -181,7 +181,6 @@ public class WaterWave extends ImageView {
 								if (mMouseListener != null) {
 									mMouseListener.onTwoPoitScroll(distanceY_2);;
 								}
-								
 							}
 						}
 					} else {
@@ -198,12 +197,17 @@ public class WaterWave extends ImageView {
 							+ (start_x_2_all - end_x_2_all);
 					float offsety = (start_y_1_all - end_y_1_all)
 							+ (start_y_2_all - end_y_2_all);
-					if (Math.abs(offsetx) >Math.abs(offsety)) {
-						//发送右击事件
+					//双指左右滑动触发右击，改为双指点击触发鼠标右键
+					if (Math.abs(offsetx)+Math.abs(offsety) < 6) {
 						if (mMouseListener != null) {
-							mMouseListener.onTwoPoitYMove();
+							mMouseListener.onTwoPoitXMove();
 						}
 					}
+					//双手左右滑动
+//					if (Math.abs(offsetx) > Math.abs(offsety)) {
+//						//发送右击事件
+//						
+//					}
 					break;
 				default:
 					break;
@@ -350,7 +354,7 @@ public class WaterWave extends ImageView {
 		public void onOnePointDoubleClick();
 		public void onPointMove(float distanceX,float distanceY);
 		public void onTwoPoitScroll(float distanceY);
-		public void onTwoPoitYMove();
+		public void onTwoPoitXMove();
 		public void onThreeUp();
 	}
 }

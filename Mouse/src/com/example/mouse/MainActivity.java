@@ -33,20 +33,20 @@ public class MainActivity extends Activity {
 	public byte[] RightSingleTap = { 5 };
 	// 单点触控down坐标
 	public WaterWave mWaterWave;
-
+	public UdpUtils mUtils ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//初始化UdpUtils
+		mUtils= UdpUtils.getInstence();
+		mUtils.setmServiceIP(ServiceIP);
+		mUtils.setPort(MESSAGE_PORT);
 		setContentView(R.layout.activity_main);
 		mWaterWave = (WaterWave)findViewById(R.id.waterWave);
 		mWaterWave.setOnMouseListener(new MouseListener() {
 			@Override
 			public void onTwoPoitScroll(float distanceY) {
-				new Thread(
-						new UdpThread(
-								Arrays.toString(intToByteArray_ScrollY((int) distanceY))))
-						.start();
-				
+				mUtils.sendMessage(Arrays.toString(intToByteArray_ScrollY((int) distanceY)));		
 			}
 			
 			@Override
@@ -57,25 +57,23 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onPointMove(float distanceX, float distanceY) {
-				new Thread(new UdpThread(Arrays.toString(intToMoveByteArray(
-						(int) distanceX, (int) distanceY)))).start();
+				mUtils.sendMessage(Arrays.toString(intToMoveByteArray(
+						(int) distanceX, (int) distanceY)));	
 			}
 			
 			@Override
 			public void onOnePointDoubleClick() {
-				new Thread(new UdpThread(Arrays.toString(DoubleTap))).start();
+				mUtils.sendMessage(Arrays.toString(DoubleTap));		
 			}
 			
 			@Override
 			public void onOnePointClick() {
-				new Thread(new UdpThread(Arrays.toString(SingleTap))).start();
-				
+				mUtils.sendMessage(Arrays.toString(SingleTap));	
 			}
 
 			@Override
-			public void onTwoPoitYMove() {
-				new Thread(new UdpThread(Arrays.toString(RightSingleTap))).start();
-				
+			public void onTwoPoitXMove() {
+				mUtils.sendMessage(Arrays.toString(RightSingleTap));					
 			}
 		});
 	}
@@ -98,7 +96,8 @@ public class MainActivity extends Activity {
 		result[8] = (byte) (y & 0xFF);
 		return result;
 	}
-
+//git config --global push.default matching
+	//git config --global push.default simple
 	public static byte[] intToByteArray_ScrollY(int distanceY) {
 		// 必须把我们要的值弄到最低位去，有人说不移位这样做也可以， result[0] = (byte)(i & 0xFF000000);
 		// ，这样虽然把第一个字节取出来了，但是若直接转换为byte类型，会超出byte的界限，出现error。再提下数
