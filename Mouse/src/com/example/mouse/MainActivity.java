@@ -23,7 +23,7 @@ import android.view.GestureDetector.OnGestureListener;
 public class MainActivity extends Activity {
 	public static final int BROADCAST_PORT = 10006;
 	public static final int BROADCAST_RES_PORT = 10007;
-	public static final int MESSAGE_PORT = 5000;
+	public static final int MESSAGE_PORT = 9999;
 	// 默认为255.255.255.255 知道远程被控制端的ip之后可以指定ip
 	// 要知道指定ip参照 请访问https://github.com/chengcnaplex/AndroidUdpDemo
 	public String ServiceIP = "255.255.255.255";

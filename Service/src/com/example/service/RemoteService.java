@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class RemoteService {
 	static Robot robot;
 	static Point point;
-	public static final int MESSAGE_PORT = 5000;
+	public static final int MESSAGE_PORT = 9999;
 
 	public static void main(String[] args) throws AWTException,
 			InterruptedException, IOException {
@@ -27,8 +27,11 @@ public class RemoteService {
 		try {
 			while (true) {
 				String  reciveData = udpServiceUtils.reciveUpdData();	
-				System.out.println(reciveData);
+				if(reciveData.equals("")){
+					break;
+				}
 				byte[] recvData = getByteArraysByString(reciveData);
+				
 				controlMouseByDate(recvData);
 			}
 		} catch (Exception e) {

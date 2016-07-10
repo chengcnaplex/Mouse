@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 
 
@@ -9,7 +10,8 @@ import java.net.DatagramSocket;
 
 public class UdpServiceUtils {
 	private String mServiceIP;
-	private int mPort = 5000;
+	private static int mPort = 9999;
+	static DatagramSocket server;
 	public String getmServiceIP() {
 		return mServiceIP;
 	}
@@ -27,6 +29,7 @@ public class UdpServiceUtils {
 	}
 	private static UdpServiceUtils mUdpServiceUtils;
 	public static UdpServiceUtils getInstence(){
+		initServer();
 		if (mUdpServiceUtils == null) {
 			synchronized (UdpServiceUtils.class) {
 				if (mUdpServiceUtils == null) {
@@ -36,20 +39,39 @@ public class UdpServiceUtils {
 		}
 		return mUdpServiceUtils;
 	}
-	public String reciveUpdData() throws Exception {
+	private static void initServer() {
+		if (server == null) {
+			synchronized (UdpServiceUtils.class) {
+				if (mUdpServiceUtils == null) {
+					mUdpServiceUtils = new UdpServiceUtils();
+				}
+			}
+		}
+		try {
+			server = new DatagramSocket(mPort);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@SuppressWarnings("finally")
+	public String reciveUpdData() {
+			String recvStr = "";
 			try {
-				DatagramSocket server = new DatagramSocket(mPort);
+				
 				byte[] recvBuf = new byte[100];
 				DatagramPacket recvPacket = new DatagramPacket(recvBuf,
 						recvBuf.length);
 				server.receive(recvPacket);
-				String recvStr = new String(recvPacket.getData(), 0,
+				recvStr = new String(recvPacket.getData(), 0,
 						recvPacket.getLength());
 				// System.out.println(recvStr);
-				server.close();
-				return recvStr;
 			} catch (Exception e) {
-				throw e;
+				e.printStackTrace();
+			}finally{
+				return recvStr;
 			}
+			
 	}
 }
