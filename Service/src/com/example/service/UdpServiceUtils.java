@@ -9,7 +9,7 @@ import java.net.DatagramSocket;
 
 public class UdpServiceUtils {
 	private String mServiceIP;
-	private int mPort;
+	private int mPort = 5000;
 	public String getmServiceIP() {
 		return mServiceIP;
 	}

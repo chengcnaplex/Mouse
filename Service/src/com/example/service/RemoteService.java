@@ -27,6 +27,7 @@ public class RemoteService {
 		try {
 			while (true) {
 				String  reciveData = udpServiceUtils.reciveUpdData();	
+				System.out.println(reciveData);
 				byte[] recvData = getByteArraysByString(reciveData);
 				controlMouseByDate(recvData);
 			}
